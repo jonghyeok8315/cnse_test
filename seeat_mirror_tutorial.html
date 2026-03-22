@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>씨앗 플랫폼 이용 가이드</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+:root {
+  --green: #7fb51a;
+  --green-dark: #5a8a0d;
+  --green-light: #eaf4d0;
+  --brown: #3d2b1f;
+  --brown2: #4a3728;
+  --yellow: #f5c842;
+  --yellow2: #e6b800;
+  --gray-bg: #f4f4f0;
+  --white: #fff;
+  --text: #1a1a1a;
+  --text2: #555;
+  --border: #ddd;
+
+  /* Tutorial overlay colors */
+  --hl: #ff3b30;
+  --hl-bg: rgba(255,59,48,0.08);
+  --bubble-bg: #fff;
+  --bubble-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #e8ecdf;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════
+   TUTORIAL CHROME (top bar)
+═══════════════════════════════ */
+.tut-chrome {
+  background: var(--brown);
+  color: white;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.tut-chrome-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.tut-logo {
+  font-size: 0.95rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.tut-logo .badge {
+  background: var(--yellow);
+  color: var(--brown);
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* Section tabs */
+.tut-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.tut-tab {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tut-tab:hover { background: rgba(255,255,255,0.2); color: white; }
+.tut-tab.active {
+  background: var(--green);
+  color: white;
+}
+
+/* Progress */
+.tut-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  opacity: 0.9;
+}
+.step-dots {
+  display: flex;
+  gap: 5px;
+}
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.step-dot.active { background: var(--yellow); transform: scale(1.3); }
+.step-dot.done { background: var(--green); }
+
+/* ═══════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════ */
+.page-wrap {
+  padding-top: 58px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 40px;
+}
+
+.screen-container {
+  position: relative;
+  margin-top: 16px;
+}
+
+/* ═══════════════════════════════
+   SEEAT SITE RECREATION
+═══════════════════════════════ */
+
+/* === COMMON HEADER === */
+.site-header {
+  background: white;
+  border-bottom: 1px solid #e8e8e8;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+}
+.site-header-top {
+  background: #f8f8f8;
+  border-bottom: 1px solid #ebebeb;
+  padding: 6px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.78rem;
+  color: var(--text2);
+}
+.site-header-top a { color: var(--text2); text-decoration: none; }
+.site-header-top .divider { color: #ccc; }
+.site-header-main {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  text-decoration: none;
+}
+.site-logo-icon {
+  width: 36px; height: 36px;
+  background: var(--green);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+.site-logo-text {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--green);
+  letter-spacing: -0.5px;
+}
+.site-logo-sub {
+  font-size: 0.68rem;
+  color: var(--text2);
+  margin-top: 2px;
+}
+.site-nav {
+  display: flex;
+  margin-left: 30px;
+  flex: 1;
+}
+.site-nav-item {
+  padding: 18px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: default;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.site-nav-item:hover, .site-nav-item.active-nav {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+.site-header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.85rem;
+}
+.login-btn {
+  background: var(--green);
+  color: white;
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: default;
+}
+
+/* === SECTION PANEL === */
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+/* ── PANEL: 메인화면 ── */
+.main-hero {
+  background: white;
+  display: flex;
+  gap: 0;
+  min-height: 420px;
+}
+.main-hero-left {
+  flex: 1;
+  padding: 32px 28px;
+  border-right: 1px solid #f0f0f0;
+}
+.hero-banner {
+  background: linear-gradient(135deg, #f9f3e0 0%, #fffbe8 100%);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #f0e4a0;
+  margin-top: 14px;
+}
+.hero-banner-title {
+  background: var(--green);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.hero-banner h3 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.hero-banner h3 .point { color: var(--green); }
+.hero-info-list { display: flex; flex-direction: column; gap: 5px; }
+.hero-info-row {
+  display: flex;
+  gap: 10px;
+  font-size: 0.82rem;
+}
+.hero-info-label {
+  background: var(--brown);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-size: 0.78rem;
+}
+.main-hero-right {
+  width: 340px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafaf8;
+}
+.circle-menu {
+  position: relative;
+  width: 280px;
+  height: 280px;
+}
+.circle-menu-bg {
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--green);
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0.3;
+}
+.circle-quadrant {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: default;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.4;
+}
+.circle-quadrant:nth-child(2) { top: 4%; left: 4%; }
+.circle-quadrant:nth-child(3) { top: 4%; right: 4%; }
+.circle-quadrant:nth-child(4) { bottom: 4%; left: 4%; }
+.circle-quadrant:nth-child(5) { bottom: 4%; right: 4%; }
+.circle-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px; height: 30px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-notice {
+  background: var(--brown);
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+.notice-badge {
+  background: var(--yellow);
+  color: var(--brown);
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.main-shortcuts {
+  background: white;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  gap: 0;
+}
+.shortcut-item {
+  flex: 1;
+  padding: 18px 12px;
+  text-align: center;
+  border-right: 1px solid #f0f0f0;
+  cursor: default;
+}
+.shortcut-item:last-child { border-right: none; }
+.shortcut-icon { font-size: 1.6rem; margin-bottom: 6px; }
+.shortcut-label { font-size: 0.8rem; font-weight: 700; color: var(--text); line-height: 1.4; }
+.right-nav {
+  position: absolute;
+  right: -90px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text2);
+}
+.right-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+  white-space: nowrap;
+}
+.right-nav-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+  flex-shrink: 0;
+}
+.right-nav-dot.active { background: var(--green); }
+
+/* ── PANEL: 지원사업 ── */
+.section-content {
+  background: white;
+  min-height: 500px;
+  border-radius: 0 0 12px 12px;
+}
+.section-tabs-row {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+}
+.sec-tab {
+  flex: 1;
+  padding: 16px;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: default;
+  color: var(--text2);
+  border-bottom: 3px solid transparent;
+}
+.sec-tab.active {
+  color: white;
+  background: var(--green);
+  border-radius: 50px;
+  margin: 8px;
+  border-bottom: none;
+}
+.filter-area {
+  padding: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.filter-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-size: 0.85rem;
+  font-weight: 900;
+  min-width: 54px;
+  padding-top: 6px;
+}
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.ftag {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1.5px solid #d5d5d5;
+  background: white;
+  cursor: default;
+  color: var(--text2);
+}
+.ftag.sel {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+  font-weight: 700;
+}
+.search-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.search-input {
+  flex: 1;
+  border: 1.5px solid #d5d5d5;
+  border-radius: 50px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #aaa;
+}
+.search-btn {
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: default;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.reset-btn {
+  background: white;
+  border: 1.5px solid #d5d5d5;
+  border-radius: 50px;
+  padding: 10px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: default;
+  color: var(--text2);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.more-btn {
+  background: var(--brown);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: default;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.result-list { padding: 0 24px 24px; }
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #f2f2f2;
+  flex-wrap: wrap;
+}
+.result-item:last-child { border-bottom: none; }
+.dday {
+  min-width: 44px;
+  padding: 4px 8px;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-align: center;
+  border: 1.5px solid #ddd;
+  color: var(--text2);
+}
+.dday.urgent { border-color: #ff8c00; color: #ff6b00; background: #fff7ed; }
+.dday.always { border-color: #e03; color: #e03; background: #fff0f0; }
+.result-title { font-size: 0.9rem; font-weight: 500; flex: 1; }
+.result-org { font-size: 0.78rem; color: var(--text2); white-space: nowrap; }
+.result-date { font-size: 0.75rem; color: #aaa; white-space: nowrap; }
+
+/* ── PANEL: 컨설팅 ── */
+.consulting-hero {
+  background: linear-gradient(135deg, #6aa010 0%, #90c820 100%);
+  padding: 24px;
+  border-radius: 0;
+}
+.flow-steps {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.flow-step {
+  background: var(--brown);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.4;
+  min-width: 100px;
+}
+.flow-step.first {
+  background: var(--brown);
+  position: relative;
+}
+.flow-step.first::after {
+  content: '✦';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--yellow);
+  font-size: 0.9rem;
+}
+.flow-arrow { color: rgba(255,255,255,0.7); font-size: 1.1rem; font-weight: 700; }
+.consulting-desc {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  margin-top: 12px;
+}
+.consulting-body {
+  background: white;
+  padding: 20px 24px;
+}
+.consult-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+}
+.ctab {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: default;
+  border-bottom: 3px solid transparent;
+  color: var(--text2);
+}
+.ctab.active {
+  color: white;
+  background: var(--green);
+  border-radius: 50px;
+  border-bottom: none;
+}
+.consult-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.consult-table th {
+  padding: 10px;
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 2px solid #e0e0e0;
+  color: var(--text2);
+}
+.consult-table td { padding: 12px 10px; border-bottom: 1px solid #f2f2f2; }
+.status-badge {
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.status-wait { background: #f5f5f5; color: #888; border: 1px solid #ddd; }
+.status-going { background: #e6f0ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.status-done { background: var(--green-light); color: var(--green-dark); border: 1px solid #c0dc8a; }
+.consult-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+.btn-apply {
+  background: var(--brown);
+  color: white;
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: default;
+}
+.btn-check {
+  background: var(--green);
+  color: white;
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: default;
+}
+
+/* ── PANEL: 강의실 ── */
+.classroom-body {
+  background: #2d5016;
+  border-radius: 0 0 12px 12px;
+  padding: 24px;
+}
+.classroom-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 16px;
+}
+.classroom-col h4 {
+  color: var(--yellow);
+  font-size: 0.95rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.classroom-col h4 .more { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 500; }
+.video-card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  cursor: default;
+}
+.video-thumb {
+  height: 70px;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+.video-info { padding: 8px; }
+.video-title { color: rgba(255,255,255,0.9); font-size: 0.78rem; line-height: 1.4; }
+.video-search {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+.video-search input {
+  flex: 1;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: white;
+  font-size: 0.8rem;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.video-search button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: white;
+  cursor: default;
+  font-size: 0.85rem;
+}
+.doc-item {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.8rem;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.doc-item:last-child { border-bottom: none; }
+.doc-date { color: rgba(255,255,255,0.45); font-size: 0.75rem; white-space: nowrap; }
+.classroom-notice {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.classroom-notice .label {
+  background: var(--yellow);
+  color: var(--brown);
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.classroom-notice span { color: rgba(255,255,255,0.8); font-size: 0.82rem; }
+
+/* ── PANEL: 회원가입 ── */
+.login-page {
+  background: white;
+  min-height: 480px;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+.login-box {
+  width: 100%;
+  max-width: 420px;
+}
+.login-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 6px; }
+.login-subtitle { font-size: 0.85rem; color: var(--text2); margin-bottom: 24px; }
+.login-field { margin-bottom: 14px; }
+.login-field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.login-field label .req { color: #e03; }
+.login-input {
+  width: 100%;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 0.92rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #aaa;
+}
+.login-btn-main {
+  width: 100%;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 13px;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: default;
+  font-family: 'Noto Sans KR', sans-serif;
+  margin-top: 8px;
+}
+.login-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--text2);
+}
+.signup-area {
+  border-top: 1px solid #f0f0f0;
+  margin-top: 20px;
+  padding-top: 20px;
+  text-align: center;
+}
+.signup-area p { font-size: 0.85rem; color: var(--text2); margin-bottom: 10px; }
+.signup-btn {
+  display: inline-block;
+  border: 2px solid var(--green);
+  color: var(--green);
+  padding: 10px 32px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: default;
+}
+
+/* ═══════════════════════════════
+   TUTORIAL OVERLAY
+═══════════════════════════════ */
+
+/* Highlight ring */
+.tut-highlight {
+  position: absolute;
+  border: 3px solid var(--hl);
+  border-radius: 10px;
+  background: var(--hl-bg);
+  pointer-events: none;
+  z-index: 100;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: pulseRing 1.8s ease-in-out infinite;
+}
+@keyframes pulseRing {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,59,48,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(255,59,48,0); }
+}
+
+/* Number badge on highlight */
+.tut-num {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  width: 28px; height: 28px;
+  background: var(--hl);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 900;
+  z-index: 101;
+  box-shadow: 0 2px 8px rgba(255,59,48,0.5);
+}
+
+/* Arrow pointer */
+.tut-arrow {
+  position: absolute;
+  z-index: 102;
+  color: var(--hl);
+  font-size: 1.6rem;
+  animation: bounce 1s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Bubble card */
+.tut-bubble {
+  position: relative;
+  background: var(--bubble-bg);
+  border-radius: 16px;
+  box-shadow: var(--bubble-shadow);
+  padding: 20px 22px;
+  margin-top: 14px;
+  border-left: 5px solid var(--green);
+  z-index: 200;
+}
+.tut-bubble.warn { border-left-color: #ff8c00; }
+.tut-bubble.tip { border-left-color: var(--green); background: var(--green-light); }
+.tut-bubble-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.tut-step-num {
+  background: var(--green);
+  color: white;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.tut-step-num.warn-num { background: #ff8c00; }
+.tut-bubble-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--text);
+}
+.tut-bubble-body {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.tut-bubble-body strong { color: var(--green-dark); }
+.tut-bubble-body .warn-txt { color: #c05000; font-weight: 700; }
+
+/* Navigation buttons */
+.tut-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  gap: 10px;
+}
+.tut-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.2s;
+}
+.tut-prev { background: #f0f0f0; color: var(--text2); }
+.tut-prev:hover { background: #e0e0e0; }
+.tut-next {
+  background: var(--green);
+  color: white;
+  flex: 1;
+  justify-content: center;
+  box-shadow: 0 3px 12px rgba(127,181,26,0.35);
+}
+.tut-next:hover { background: var(--green-dark); }
+.tut-try {
+  background: var(--brown);
+  color: white;
+  text-decoration: none;
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Step counter in bubble */
+.step-counter {
+  font-size: 0.8rem;
+  color: var(--text2);
+  text-align: center;
+}
+
+/* DIM overlay */
+.tut-dim {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Screen wrapper */
+.screen-wrapper {
+  position: relative;
+  border-radius: 0 0 12px 12px;
+  overflow: visible;
+}
+
+/* Completed screen */
+.complete-card {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  border-radius: 0 0 12px 12px;
+  padding: 40px;
+  text-align: center;
+  color: white;
+}
+.complete-card h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
+.complete-card p { font-size: 0.95rem; line-height: 1.7; opacity: 0.9; margin-bottom: 20px; }
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media (max-width: 760px) {
+  .main-hero { flex-direction: column; }
+  .main-hero-right { width: 100%; }
+  .circle-menu { width: 220px; height: 220px; margin: 0 auto; }
+  .classroom-grid { grid-template-columns: 1fr; }
+  .site-nav { display: none; }
+  .flow-steps { flex-direction: column; align-items: flex-start; }
+  .right-nav { display: none; }
+  .tut-tabs { gap: 3px; }
+  .tut-tab { padding: 6px 10px; font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TUTORIAL TOP BAR ═══ -->
+<div class="tut-chrome">
+  <div class="tut-chrome-inner">
+    <div class="tut-logo">
+      🌱 씨앗 이용 가이드
+      <span class="badge">따라하기</span>
+    </div>
+    <div class="tut-tabs">
+      <button class="tut-tab active" onclick="switchSection('main')">① 메인 화면</button>
+      <button class="tut-tab" onclick="switchSection('support')">② 지원사업 찾기</button>
+      <button class="tut-tab" onclick="switchSection('consult')">③ 컨설팅 신청</button>
+      <button class="tut-tab" onclick="switchSection('class')">④ 강의실·자료실</button>
+      <button class="tut-tab" onclick="switchSection('login')">⑤ 회원가입·로그인</button>
+    </div>
+    <div class="tut-progress">
+      <div class="step-dots" id="stepDots"></div>
+      <span id="stepLabel" style="font-size:0.8rem; opacity:0.8;"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE ═══ -->
+<div class="page-wrap">
+<div class="screen-container">
+
+<!-- ═══ SHARED HEADER ═══ -->
+<div class="site-header">
+  <div class="site-header-top">
+    <span>충남사회적경제지원센터</span>
+    <span class="divider">|</span>
+    <span>충남사회적경제혁신타운</span>
+    <span class="divider">|</span>
+    <span style="color:var(--green); font-weight:700;">경영지원플랫폼 씨앗</span>
+    <span class="divider">|</span>
+    <span>우리마을에듀</span>
+    <span class="divider">|</span>
+    <span>CNSE 메타버스</span>
+  </div>
+  <div class="site-header-main">
+    <div class="site-logo">
+      <div class="site-logo-icon">🌱</div>
+      <div>
+        <div class="site-logo-text">씨앗 seeat</div>
+        <div class="site-logo-sub">Social Economy Enterprise - All Thing's</div>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <div class="site-nav-item" id="nav-지원사업" onclick="switchSection('support')">지원사업</div>
+      <div class="site-nav-item" id="nav-컨설팅창구" onclick="switchSection('consult')">컨설팅 창구</div>
+      <div class="site-nav-item" id="nav-경영강의실" onclick="switchSection('class')">경영 강의실</div>
+      <div class="site-nav-item" id="nav-자료실">자료실</div>
+    </nav>
+    <div class="site-header-right">
+      <span style="font-size:1.1rem; cursor:default;">🔔</span>
+      <span style="font-size:1.1rem; cursor:default;">🔍</span>
+      <div class="login-btn" onclick="switchSection('login')" style="cursor:pointer;">로그인</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SCREEN WRAPPER ═══ -->
+<div class="screen-wrapper" id="screenWrapper">
+
+  <!-- ── SECTION: 메인화면 ── -->
+  <div class="section-panel active" id="sec-main">
+    <div class="main-hero">
+      <div class="main-hero-left">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+          <span style="font-size:1.1rem;">🌱</span>
+          <span style="font-size:1rem; font-weight:900; color:var(--green);">씨앗 seeat</span>
+          <span style="font-size:0.78rem; color:var(--text2);">경영지원 플랫폼</span>
+        </div>
+        <div class="hero-banner">
+          <div class="hero-banner-title">2026 경영지원플랫폼 씨앗 컨설팅 참여기업 모집</div>
+          <h3><span class="point">고민</span> 아닌 <span class="point">신청</span>으로 해결하세요!</h3>
+          <div class="hero-info-list">
+            <div class="hero-info-row">
+              <span class="hero-info-label">지원 대상</span>
+              <span style="font-size:0.82rem;">충청남도 소재 사회적경제기업</span>
+            </div>
+            <div class="hero-info-row">
+              <span class="hero-info-label">신청기간</span>
+              <span style="font-size:0.82rem;">상시 신청 (예산 소진 시까지)</span>
+            </div>
+            <div class="hero-info-row">
+              <span class="hero-info-label">신청방법</span>
+              <span style="font-size:0.82rem;">경영지원플랫폼 씨앗 컨설팅 창구를 통해 신청</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-hero-right">
+        <div style="position:relative;">
+          <div class="circle-menu">
+            <div class="circle-menu-bg"></div>
+            <div class="circle-quadrant" style="top:8%; left:8%;">📢<br>지원사업 소식</div>
+            <div class="circle-quadrant" style="top:8%; right:8%;">💬<br>컨설팅 창구</div>
+            <div class="circle-quadrant" style="bottom:8%; left:8%;">📚<br>강의실/자료실</div>
+            <div class="circle-quadrant" style="bottom:8%; right:8%;">ℹ️<br>플랫폼 이용안내</div>
+            <div class="circle-center" style="font-size:0.8rem;">🌱</div>
+          </div>
+          <div class="right-nav" id="rightNav">
+            <div class="right-nav-item"><div class="right-nav-dot active"></div>플랫폼 메인</div>
+            <div class="right-nav-item"><div class="right-nav-dot"></div>지원사업 소식</div>
+            <div class="right-nav-item"><div class="right-nav-dot"></div>컨설팅 창구</div>
+            <div class="right-nav-item"><div class="right-nav-dot"></div>강의실/자료실</div>
+            <div class="right-nav-item"><div class="right-nav-dot"></div>메일 받아보기</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main-notice">
+      <span class="notice-badge">공지</span>
+      <span>충남 사회적경제 경영지원 플랫폼 '씨앗'에 오신 여러분을 환영합니다.</span>
+    </div>
+    <div class="main-shortcuts">
+      <div class="shortcut-item">
+        <div class="shortcut-icon">📍</div>
+        <div class="shortcut-label">충남 스타트업<br>지도</div>
+      </div>
+      <div class="shortcut-item">
+        <div class="shortcut-icon">🏛️</div>
+        <div class="shortcut-label">충남 사회적경제<br>기금</div>
+      </div>
+      <div class="shortcut-item">
+        <div class="shortcut-icon">🤝</div>
+        <div class="shortcut-label">지원체계<br>안내</div>
+      </div>
+      <div class="shortcut-item">
+        <div class="shortcut-icon">✉️</div>
+        <div class="shortcut-label">메일 받아보기/<br>관련 사이트</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: 지원사업 ── -->
+  <div class="section-panel" id="sec-support">
+    <div class="section-content">
+      <div class="section-tabs-row">
+        <div class="sec-tab">행정 소식</div>
+        <div class="sec-tab active">지원사업 소식</div>
+        <div class="sec-tab">입찰정보</div>
+      </div>
+      <div class="filter-area">
+        <div class="filter-row">
+          <span class="filter-label">기업분류</span>
+          <div class="filter-tags">
+            <span class="ftag">예비창업/육성사업팀</span>
+            <span class="ftag sel">(예비)사회적기업</span>
+            <span class="ftag">(예비)마을기업</span>
+            <span class="ftag">(사회적)협동조합</span>
+            <span class="ftag">자활기업/사업단</span>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">관심분야</span>
+          <div class="filter-tags">
+            <span class="ftag">창업/사업화/연구개발</span>
+            <span class="ftag">판로/유통/마케팅</span>
+            <span class="ftag sel">멘토링/컨설팅</span>
+            <span class="ftag">교육/행사/네트워크</span>
+            <span class="ftag">임팩트투자/금융</span>
+            <span class="ftag">인·지정/재정/인력</span>
+          </div>
+        </div>
+        <div class="search-row">
+          <input class="search-input" placeholder="검색어를 입력해주세요." readonly>
+          <button class="search-btn">🔍 검색</button>
+          <button class="reset-btn">↺ 선택초기화</button>
+          <button class="more-btn">+ 더보기</button>
+        </div>
+      </div>
+      <div class="result-list">
+        <div class="result-item">
+          <span class="dday always">상시</span>
+          <span class="result-title">사회적기업 인증서 재발급 및 정관 변경 신고 안내 (2025.9월 업데이트)</span>
+          <span class="result-org">한국사회적기업진흥원</span>
+          <span class="result-date">2025-09-17</span>
+        </div>
+        <div class="result-item">
+          <span class="dday urgent">D-2</span>
+          <span class="result-title">2026년도 창업중심대학 대학발 (예비)창업기업 모집 공고</span>
+          <span class="result-org">창업진흥원</span>
+          <span class="result-date">2026-03-04</span>
+        </div>
+        <div class="result-item">
+          <span class="dday urgent">D-3</span>
+          <span class="result-title">2026년 스포츠산업 창업지원사업 참여기업(예비초기/창업도약) 모집</span>
+          <span class="result-org">서울올림픽기념국민체육진흥공단</span>
+          <span class="result-date">2026-03-11</span>
+        </div>
+        <div class="result-item">
+          <span class="dday" style="color:#aaa;">D-14</span>
+          <span class="result-title">2026년도 예비창업패키지 예비창업자 모집 수정 공고</span>
+          <span class="result-org">창업진흥원</span>
+          <span class="result-date">2026-02-28</span>
+        </div>
+        <div class="result-item">
+          <span class="dday" style="color:#aaa;">D-20</span>
+          <span class="result-title">2026년 스타일테크 유망기업 8기 모집 공고</span>
+          <span class="result-org">한국디자인진흥원</span>
+          <span class="result-date">2026-03-12</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: 컨설팅 ── -->
+  <div class="section-panel" id="sec-consult">
+    <div class="consulting-hero">
+      <div class="flow-steps">
+        <div class="flow-step first">컨설팅<br>신청·접수</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">경영 / 피어<br>컨설팅 연계</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">전문가 매칭 후<br>사전 미팅</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">컨설팅<br>진행</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">컨설팅 완료<br>만족도 조사</div>
+      </div>
+      <p class="consulting-desc">법률 / 행정 / 지식재산 / 인사노무 / 세무회계 / 마케팅 등 분야별 컨설팅을 연계해 드립니다.</p>
+    </div>
+    <div class="consulting-body">
+      <div class="consult-tabs">
+        <div class="ctab active">컨설팅 창구</div>
+        <div class="ctab">상담·컨설팅 사례</div>
+      </div>
+      <div style="font-size:0.82rem; color:var(--text2); margin-bottom:10px;">총 <strong>8</strong>개</div>
+      <table class="consult-table">
+        <thead>
+          <tr>
+            <th>상태</th><th>제목</th><th>구분</th><th>기업유형</th><th>작성자</th><th>작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="status-badge status-wait">대기</span></td><td>상담 요청 드립니다.</td><td>컨설팅</td><td>사회적협동조합</td><td>○○성</td><td>2026-03-20</td></tr>
+          <tr><td><span class="status-badge status-going">처리중</span></td><td>상담 요청 드립니다.</td><td>컨설팅</td><td>사회적기업</td><td>○○인</td><td>2026-02-14</td></tr>
+          <tr><td><span class="status-badge status-going">처리중</span></td><td>상담 요청 드립니다.</td><td>컨설팅</td><td>마을기업</td><td>○○웅</td><td>2026-01-03</td></tr>
+          <tr><td><span class="status-badge status-done">상담완료</span></td><td>상담 요청 드립니다.</td><td>예비사회적기업 전문컨설팅</td><td>예비사회적기업</td><td>○○리</td><td>2025-12-15</td></tr>
+        </tbody>
+      </table>
+      <div class="consult-actions">
+        <div class="btn-apply">컨설팅 신청하기 →</div>
+        <div class="btn-check">신청확인</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: 강의실 ── -->
+  <div class="section-panel" id="sec-class">
+    <div class="classroom-body">
+      <div class="classroom-grid">
+        <div class="classroom-col">
+          <h4>씨앗 강의실 <span class="more">+ 더보기</span></h4>
+          <div class="video-card">
+            <div class="video-thumb">▶️</div>
+            <div class="video-info"><div class="video-title">사회적경제와 ESG 경영 1편 - ESG 경영 기본 개념</div></div>
+          </div>
+          <div class="video-card">
+            <div class="video-thumb" style="background:rgba(255,255,255,0.05);">▶️</div>
+            <div class="video-info"><div class="video-title">인사관리자 필수시청 근로법 정리해 드릴게요</div></div>
+          </div>
+          <div class="video-search">
+            <input value="인사노무" readonly>
+            <button>🔍</button>
+          </div>
+        </div>
+        <div class="classroom-col">
+          <h4>정책자료 <span class="more">+ 더보기</span></h4>
+          <div class="doc-item"><span>[한국사회적기업진흥원] 2025년 예비사회적기업(지역형) 사업…</span><span class="doc-date">2025-05-02</span></div>
+          <div class="doc-item"><span>[한국사회적기업진흥원] 2025년 예비사회적기업(부처형) 사업…</span><span class="doc-date">2025-05-02</span></div>
+          <div style="margin-top:14px;">
+            <h4>기타자료 <span class="more">+ 더보기</span></h4>
+            <div class="doc-item"><span>[고용노동부] 경영책임자와 관리자가 알아야 할 중대재해처벌법…</span><span class="doc-date">2022-11-07</span></div>
+            <div class="doc-item"><span>[고용노동부] 공휴일법 확대적용에 따른 Q&A (5인 이상 사업장)</span><span class="doc-date">2022-11-07</span></div>
+          </div>
+        </div>
+        <div class="classroom-col">
+          <h4>교육자료 <span class="more">+ 더보기</span></h4>
+          <div class="doc-item"><span>2023 충남 사회적경제 CSR 포럼 발제자료</span><span class="doc-date">2023-07-05</span></div>
+          <div class="doc-item"><span>기업 운영에 필요한 교육(인사노무편) - 근로의 대가는 꼭…</span><span class="doc-date">2022-11-03</span></div>
+          <div style="margin-top:14px;">
+            <h4>서식자료 <span class="more">+ 더보기</span></h4>
+            <div class="doc-item"><span>입무 관련 서식</span><span class="doc-date">2022-12-06</span></div>
+            <div class="doc-item"><span>계약 관련 서식</span><span class="doc-date">2022-12-01</span></div>
+            <div class="doc-item"><span>회계/재무 관련 서식</span><span class="doc-date">2022-11-09</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="classroom-notice">
+        <span class="label">교육공지</span>
+        <span>강의실/자료실 페이지 입니다.</span>
+        <span style="margin-left:auto; opacity:0.5; font-size:0.8rem;">1 / 1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION: 로그인 ── -->
+  <div class="section-panel" id="sec-login">
+    <div class="login-page">
+      <div class="login-box">
+        <div class="login-title">로그인</div>
+        <div class="login-subtitle">씨앗 플랫폼 서비스를 이용하시려면 로그인이 필요합니다.</div>
+        <div class="login-field">
+          <label>아이디 <span class="req">*</span></label>
+          <input class="login-input" placeholder="아이디를 입력해주세요." readonly>
+        </div>
+        <div class="login-field">
+          <label>비밀번호 <span class="req">*</span></label>
+          <input class="login-input" type="password" placeholder="비밀번호를 입력해주세요." readonly>
+        </div>
+        <button class="login-btn-main">로그인</button>
+        <div class="login-links">
+          <span>아이디 찾기</span><span style="color:#ddd;">|</span>
+          <span>비밀번호 찾기</span>
+        </div>
+        <div class="signup-area">
+          <p>아직 씨앗 회원이 아니신가요?</p>
+          <div class="signup-btn">회원가입</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end screen-wrapper -->
+
+<!-- ═══ TUTORIAL HIGHLIGHT LAYER ═══ -->
+<div id="tutHighlight" class="tut-highlight" style="display:none;">
+  <div class="tut-num" id="tutNum">1</div>
+</div>
+<div id="tutArrow" class="tut-arrow" style="display:none;">👆</div>
+
+<!-- ═══ TUTORIAL BUBBLE ═══ -->
+<div id="tutBubble" class="tut-bubble">
+  <div class="tut-bubble-header">
+    <div class="tut-step-num" id="bubbleNum">1</div>
+    <div class="tut-bubble-title" id="bubbleTitle">제목</div>
+  </div>
+  <div class="tut-bubble-body" id="bubbleBody">내용</div>
+  <div class="tut-nav">
+    <button class="tut-nav-btn tut-prev" id="btnPrev" onclick="prevStep()">← 이전</button>
+    <div class="step-counter" id="stepCounter"></div>
+    <button class="tut-nav-btn tut-next" id="btnNext" onclick="nextStep()">다음 →</button>
+  </div>
+</div>
+
+</div><!-- end screen-container -->
+</div><!-- end page-wrap -->
+
+<script>
+// ═══════════════════════════════════════════
+// TUTORIAL DATA
+// ═══════════════════════════════════════════
+const sections = {
+
+  main: {
+    label: '메인 화면',
+    steps: [
+      {
+        title: '화면 맨 위 — 상단 메뉴',
+        body: '화면 위쪽에 있는 초록색 메뉴들이에요. <strong>지원사업, 컨설팅 창구, 경영 강의실, 자료실</strong> 중 원하는 것을 클릭하면 해당 페이지로 이동해요.',
+        type: 'normal',
+        target: { selector: '.site-nav', pad: 6 }
+      },
+      {
+        title: '오른쪽 위 — 로그인 버튼',
+        body: '오른쪽 위에 있는 <strong>초록색 "로그인" 버튼</strong>이에요. 컨설팅 신청이나 강의 이용 시 꼭 로그인이 필요해요. 클릭하면 로그인 화면으로 이동해요.',
+        type: 'normal',
+        target: { selector: '.login-btn', pad: 8 }
+      },
+      {
+        title: '가운데 동그라미 — 4가지 주요 기능',
+        body: '화면 오른쪽 동그라미 안에 <strong>4가지 주요 메뉴</strong>가 있어요. 📢 지원사업 소식 / 💬 컨설팅 창구 / 📚 강의실·자료실 / ℹ️ 플랫폼 이용안내 — 클릭하면 바로 이동해요.',
+        type: 'normal',
+        target: { selector: '.circle-menu', pad: 10 }
+      },
+      {
+        title: '오른쪽 점 메뉴 — 섹션 이동',
+        body: '화면 오른쪽에 작은 점들이 보이시나요? 이게 <strong>섹션 이동 메뉴</strong>예요. 클릭하면 해당 섹션으로 화면이 바로 이동해요. 아래로 스크롤 하지 않아도 돼요!',
+        type: 'tip',
+        target: { selector: '#rightNav', pad: 8 }
+      },
+      {
+        title: '공지 배너 — 중요 소식 확인',
+        body: '화면 아래쪽 <strong>어두운 색 공지 배너</strong>에서 중요한 공지사항을 볼 수 있어요. 클릭하면 자세한 내용을 확인할 수 있어요.',
+        type: 'normal',
+        target: { selector: '.main-notice', pad: 4 }
+      },
+      {
+        title: '바로가기 메뉴 — 자주 쓰는 외부 링크',
+        body: '맨 아래쪽에 있는 <strong>4개의 바로가기</strong>예요. 충남 스타트업 지도, 사회적경제 기금, 지원체계 안내, 메일 받아보기를 클릭하면 각 페이지로 이동해요.',
+        type: 'tip',
+        target: { selector: '.main-shortcuts', pad: 4 }
+      }
+    ]
+  },
+
+  support: {
+    label: '지원사업 찾기',
+    steps: [
+      {
+        title: '탭 선택 — 보고 싶은 소식 종류 고르기',
+        body: '<strong>행정 소식 / 지원사업 소식 / 입찰정보</strong> 3가지 탭이 있어요. 지금 초록색으로 표시된 <strong>"지원사업 소식"</strong>이 선택된 상태예요. 원하는 탭을 클릭하세요.',
+        type: 'normal',
+        target: { selector: '.section-tabs-row', pad: 4 }
+      },
+      {
+        title: '기업분류 필터 — 내 기업 유형 선택',
+        body: '여기서 <strong>내 기업 유형을 클릭</strong>하면 해당 기업에 맞는 지원사업만 보여줘요. 초록색으로 바뀐 것이 지금 선택된 항목이에요. 여러 개를 동시에 선택할 수도 있어요!',
+        type: 'normal',
+        target: { selector: '.filter-row:first-child', pad: 8 }
+      },
+      {
+        title: '관심분야 필터 — 원하는 분야 선택',
+        body: '<strong>관심 있는 분야</strong>를 클릭하면 더 정확하게 찾을 수 있어요. 예를 들어 "멘토링/컨설팅"을 클릭하면 관련 지원사업만 필터링돼요.',
+        type: 'normal',
+        target: { selector: '.filter-row:last-of-type', pad: 8 }
+      },
+      {
+        title: '검색창 — 키워드로 직접 찾기',
+        body: '찾고 싶은 단어를 <strong>검색창에 입력</strong>하고 초록색 <strong>"🔍 검색" 버튼</strong>을 누르면 관련 정보만 나와요. 조건을 초기화하려면 <strong>"↺ 선택초기화"</strong>를 누르세요.',
+        type: 'normal',
+        target: { selector: '.search-row', pad: 6 }
+      },
+      {
+        title: '검색 결과 — D-day 태그 읽는 법',
+        body: '각 항목 왼쪽에 있는 태그가 마감일이에요.<br><span style="background:#fff0f0;color:#e03;font-weight:700;padding:1px 6px;border-radius:4px;">상시</span> = 언제든지 신청 가능<br><span style="background:#fff4e6;color:#ff6b00;font-weight:700;padding:1px 6px;border-radius:4px;">D-2</span> = <span class="warn-txt">2일 후 마감! 서둘러야 해요</span><br>제목을 클릭하면 자세한 내용을 볼 수 있어요.',
+        type: 'warn',
+        target: { selector: '.result-list', pad: 6 }
+      }
+    ]
+  },
+
+  consult: {
+    label: '컨설팅 신청',
+    steps: [
+      {
+        title: '컨설팅 진행 순서 — 전체 흐름 파악',
+        body: '컨설팅은 이런 순서로 진행돼요: <strong>신청·접수 → 전문가 연계 → 사전 미팅 → 컨설팅 진행 → 완료</strong>. 지금 빛나는 <strong>첫 번째 단계</strong>가 우리가 할 일이에요!',
+        type: 'normal',
+        target: { selector: '.flow-steps', pad: 8 }
+      },
+      {
+        title: '"컨설팅 창구" 탭 — 내 신청 목록',
+        body: '탭이 2개 있어요. <strong>"컨설팅 창구"</strong>는 내가 신청한 목록을 보는 곳이고, <strong>"상담·컨설팅 사례"</strong>는 다른 기업의 상담 사례를 참고할 수 있는 곳이에요.',
+        type: 'normal',
+        target: { selector: '.consult-tabs', pad: 6 }
+      },
+      {
+        title: '상태 표시 — 내 신청이 어디까지 왔나',
+        body: '신청 목록에서 <strong>상태 배지</strong>로 진행 상황을 확인해요.<br>⬜ <strong>대기</strong> = 접수 기다리는 중<br>🔵 <strong>처리중</strong> = 담당자가 검토 중<br>🟢 <strong>상담완료</strong> = 컨설팅 완료',
+        type: 'normal',
+        target: { selector: '.consult-table tbody', pad: 6 }
+      },
+      {
+        title: '"컨설팅 신청하기" 버튼 — 여기를 누르세요!',
+        body: '오른쪽 아래에 있는 <strong>어두운 색 "컨설팅 신청하기 →" 버튼</strong>을 클릭하면 신청 화면으로 이동해요. <span class="warn-txt">⚠️ 로그인이 되어있어야 해요!</span> 로그인이 안 되어 있으면 로그인 화면으로 이동해요.',
+        type: 'warn',
+        target: { selector: '.consult-actions', pad: 8 }
+      },
+      {
+        title: '신청서 작성 요령',
+        body: '<strong>별표(*) 항목</strong>은 반드시 입력해야 해요. 신청서에는 기업유형, 컨설팅 분야, 문의 내용을 적어요. 내용을 <strong>구체적으로 쓸수록</strong> 더 도움이 되는 컨설팅을 받을 수 있어요!<br><br>예시: "직원 3명인데 퇴직금 계산 방법을 모르겠어요."',
+        type: 'tip',
+        target: { selector: '.consulting-body', pad: 8 }
+      }
+    ]
+  },
+
+  class: {
+    label: '강의실·자료실',
+    steps: [
+      {
+        title: '씨앗 강의실 — 무료 교육 영상',
+        body: '왼쪽 <strong>씨앗 강의실</strong>에서 경영 관련 유튜브 영상을 무료로 볼 수 있어요. 영상 썸네일(사진)을 클릭하면 유튜브가 열려서 바로 재생돼요!',
+        type: 'normal',
+        target: { selector: '.classroom-col:first-child', pad: 8 }
+      },
+      {
+        title: '강의 검색 — 원하는 주제 찾기',
+        body: '강의실 왼쪽 아래에 있는 <strong>검색창</strong>에 주제를 입력하고 🔍 버튼을 누르면 관련 영상만 모아서 보여줘요. 예를 들어 <strong>"인사노무"</strong>를 검색하면 노무 관련 영상만 나와요.',
+        type: 'tip',
+        target: { selector: '.video-search', pad: 6 }
+      },
+      {
+        title: '정책자료·기타자료 — 정부 정책 문서',
+        body: '가운데에 있는 <strong>정책자료와 기타자료</strong>예요. 정부 기관에서 발행한 정책 관련 자료를 다운로드할 수 있어요. 제목을 클릭하면 자세한 내용과 다운로드 버튼이 나와요.',
+        type: 'normal',
+        target: { selector: '.classroom-col:nth-child(2)', pad: 8 }
+      },
+      {
+        title: '서식자료 — 계약서·업무 서식 다운로드',
+        body: '오른쪽 아래 <strong>서식자료</strong>에서 업무에 필요한 서식을 무료로 받을 수 있어요. <strong>입무 서식, 계약 서식, 회계/재무 서식</strong> 등이 있어요. 제목을 클릭 → "첨부파일 다운로드" 버튼을 누르세요.',
+        type: 'normal',
+        target: { selector: '.classroom-col:nth-child(3)', pad: 8 }
+      }
+    ]
+  },
+
+  login: {
+    label: '회원가입·로그인',
+    steps: [
+      {
+        title: '아이디·비밀번호 입력',
+        body: '가입할 때 만든 <strong>아이디와 비밀번호</strong>를 입력해요. 흰색 칸을 클릭하면 키보드가 나타나요. 입력 후 <strong>초록색 "로그인" 버튼</strong>을 눌러요.',
+        type: 'normal',
+        target: { selector: '.login-box', pad: 12 }
+      },
+      {
+        title: '로그인 버튼 — 여기를 누르세요',
+        body: '아이디와 비밀번호를 모두 입력한 후 <strong>초록색 "로그인" 버튼</strong>을 클릭하면 로그인이 완료돼요. 로그인이 되면 컨설팅 신청 등 모든 기능을 이용할 수 있어요.',
+        type: 'normal',
+        target: { selector: '.login-btn-main', pad: 6 }
+      },
+      {
+        title: '비밀번호를 잊어버렸다면',
+        body: '비밀번호가 기억 나지 않으시면 <strong>"비밀번호 찾기"</strong>를 클릭하세요. 가입할 때 입력한 이메일로 임시 비밀번호를 받을 수 있어요.',
+        type: 'tip',
+        target: { selector: '.login-links', pad: 6 }
+      },
+      {
+        title: '아직 회원이 아니라면 — 회원가입',
+        body: '씨앗 플랫폼을 처음 사용하신다면 먼저 <strong>회원가입</strong>이 필요해요. 아래쪽 <strong>"회원가입" 버튼</strong>을 클릭하면 가입 화면으로 이동해요. 이름, 이메일, 기업정보 등을 입력하면 돼요.',
+        type: 'normal',
+        target: { selector: '.signup-area', pad: 8 }
+      }
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let currentSection = 'main';
+let currentStep = 0;
+
+// ═══════════════════════════════════════════
+// SWITCH SECTION
+// ═══════════════════════════════════════════
+function switchSection(key) {
+  // Update section panels
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('sec-' + key).classList.add('active');
+
+  // Update top tabs
+  document.querySelectorAll('.tut-tab').forEach((t, i) => {
+    const keys = ['main','support','consult','class','login'];
+    t.classList.toggle('active', keys[i] === key);
+  });
+
+  // Update nav items
+  document.querySelectorAll('.site-nav-item').forEach(n => n.classList.remove('active-nav'));
+  const navMap = { support: '지원사업', consult: '컨설팅창구', class: '경영강의실' };
+  if (navMap[key]) {
+    const el = document.getElementById('nav-' + navMap[key]);
+    if (el) el.classList.add('active-nav');
+  }
+
+  currentSection = key;
+  currentStep = 0;
+  renderStep();
+}
+
+// ═══════════════════════════════════════════
+// RENDER STEP
+// ═══════════════════════════════════════════
+function renderStep() {
+  const sec = sections[currentSection];
+  const step = sec.steps[currentStep];
+  const total = sec.steps.length;
+
+  // Bubble content
+  document.getElementById('bubbleNum').textContent = currentStep + 1;
+  document.getElementById('bubbleTitle').textContent = step.title;
+  document.getElementById('bubbleBody').innerHTML = step.body;
+  document.getElementById('stepCounter').textContent = (currentStep + 1) + ' / ' + total + ' 단계';
+
+  // Bubble style
+  const bubble = document.getElementById('tutBubble');
+  bubble.className = 'tut-bubble' + (step.type === 'warn' ? ' warn' : step.type === 'tip' ? ' tip' : '');
+  const numEl = document.getElementById('bubbleNum');
+  numEl.className = 'tut-step-num' + (step.type === 'warn' ? ' warn-num' : '');
+
+  // Nav buttons
+  document.getElementById('btnPrev').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('btnNext');
+  if (currentStep === total - 1) {
+    btnNext.textContent = '✅ 완료!';
+    btnNext.onclick = onComplete;
+  } else {
+    btnNext.textContent = '다음 →';
+    btnNext.onclick = nextStep;
+  }
+
+  // Highlight
+  positionHighlight(step.target);
+
+  // Step dots
+  renderDots(total);
+}
+
+// ═══════════════════════════════════════════
+// HIGHLIGHT POSITIONING
+// ═══════════════════════════════════════════
+function positionHighlight(target) {
+  const hl = document.getElementById('tutHighlight');
+  const arr = document.getElementById('tutArrow');
+
+  if (!target || !target.selector) {
+    hl.style.display = 'none';
+    arr.style.display = 'none';
+    return;
+  }
+
+  const el = document.querySelector(target.selector);
+  if (!el) { hl.style.display = 'none'; arr.style.display = 'none'; return; }
+
+  const wrapper = document.getElementById('screenWrapper');
+  const wRect = wrapper.getBoundingClientRect();
+  const eRect = el.getBoundingClientRect();
+  const pad = target.pad || 6;
+
+  const top = eRect.top - wRect.top - pad;
+  const left = eRect.left - wRect.left - pad;
+  const width = eRect.width + pad * 2;
+  const height = eRect.height + pad * 2;
+
+  hl.style.display = 'block';
+  hl.style.top = top + 'px';
+  hl.style.left = left + 'px';
+  hl.style.width = width + 'px';
+  hl.style.height = height + 'px';
+  document.getElementById('tutNum').textContent = currentStep + 1;
+
+  // Arrow
+  arr.style.display = 'block';
+  arr.style.top = (top + height + 4) + 'px';
+  arr.style.left = (left + width / 2 - 12) + 'px';
+
+  // Scroll element into view smoothly
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ═══════════════════════════════════════════
+// DOTS
+// ═══════════════════════════════════════════
+function renderDots(total) {
+  const container = document.getElementById('stepDots');
+  container.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
+    d.onclick = ((idx) => () => { currentStep = idx; renderStep(); })(i);
+    container.appendChild(d);
+  }
+  document.getElementById('stepLabel').textContent = sections[currentSection].label;
+}
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function nextStep() {
+  const total = sections[currentSection].steps.length;
+  if (currentStep < total - 1) {
+    currentStep++;
+    renderStep();
+  }
+}
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    renderStep();
+  }
+}
+
+function onComplete() {
+  const keys = ['main','support','consult','class','login'];
+  const idx = keys.indexOf(currentSection);
+  if (idx < keys.length - 1) {
+    // Move to next section
+    const nextKey = keys[idx + 1];
+    const labels = { main:'메인 화면', support:'지원사업 찾기', consult:'컨설팅 신청', class:'강의실·자료실', login:'회원가입·로그인' };
+    if (confirm('✅ ' + sections[currentSection].label + ' 완료!\n\n다음 단계 "' + labels[nextKey] + '"으로 이동할까요?')) {
+      switchSection(nextKey);
+    }
+  } else {
+    // All done
+    document.getElementById('tutBubble').innerHTML = `
+      <div style="text-align:center; padding:10px 0;">
+        <div style="font-size:2.5rem; margin-bottom:10px;">🎉</div>
+        <div style="font-size:1.2rem; font-weight:900; margin-bottom:8px; color:var(--green-dark);">모든 가이드를 완료했어요!</div>
+        <p style="font-size:0.92rem; color:var(--text2); line-height:1.7; margin-bottom:16px;">
+          이제 씨앗 플랫폼을 직접 이용해볼 수 있어요.<br>
+          궁금한 부분은 이 가이드를 다시 참고하세요.
+        </p>
+        <a href="https://seeat.cnse.kr/app/main/index" target="_blank" class="tut-try">
+          🌱 씨앗 플랫폼 바로가기
+        </a>
+        <div style="margin-top:12px;">
+          <button class="tut-nav-btn tut-prev" onclick="switchSection('main')" style="display:inline-flex; margin:0 auto;">처음부터 다시 보기 ↺</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('tutHighlight').style.display = 'none';
+    document.getElementById('tutArrow').style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+window.addEventListener('load', () => {
+  renderStep();
+});
+
+// Re-position on resize
+window.addEventListener('resize', () => {
+  if (sections[currentSection] && sections[currentSection].steps[currentStep]) {
+    positionHighlight(sections[currentSection].steps[currentStep].target);
+  }
+});
+</script>
+</body>
+</html>
